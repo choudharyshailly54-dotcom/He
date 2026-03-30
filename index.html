@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Tanush ✨</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100vh; overflow: hidden; background: #fff0f3; font-family: 'Segoe UI', sans-serif; }
+        
+        /* Hides Canva bars by clipping the top/bottom */
+        .portal-frame {
+            position: absolute; top: -65px; left: 0;
+            width: 100%; height: calc(100% + 130px);
+        }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        #lock-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff0f3; z-index: 100; display: flex;
+            align-items: center; justify-content: center; text-align: center;
+        }
+        .timer-box { background:white; padding:40px; border-radius:30px; border:3px solid #ff4d6d; z-index:101; }
+        .heart { position: fixed; bottom: -10%; color: #ff4d6d; animation: float 6s linear infinite; z-index: 1; pointer-events: none; }
+        @keyframes float { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-110vh); opacity: 0; } }
+    </style>
+</head>
+<body>
+    <div id="heart-container"></div>
+
+    <div id="lock-screen">
+        <div class="timer-box">
+            <h1 id="tapMe" style="color:#ff4d6d; cursor:pointer;">Tanush's Birthday Portal ✨</h1>
+            <div id="timer" style="font-size:2.5rem; font-weight:bold; margin:20px; color:#ff4d6d;">00h 00m 00s</div>
+            <button id="btn" style="display:none; background:#ff4d6d; color:white; border:none; padding:15px 30px; border-radius:50px; cursor:pointer; font-weight:bold;" onclick="unlock()">OPEN YOUR GIFT 🎁</button>
+        </div>
+    </div>
+
+    <audio id="music" loop><source src=""></audio>
+
+    <div class="portal-frame">
+        <iframe src="https://www.canva.com/design/DAHFJgRgMOg/Or66nb5nOw593TDD42M2TA/view?embed" allow="autoplay"></iframe>
+    </div>
+
+    <script>
+        const birthday = new Date("March 31, 2026 00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const d = birthday - now;
+            document.getElementById("timer").innerHTML = Math.floor((d%(1000*60*60*24))/(1000*60*60)) + "h " + Math.floor((d%(1000*60*60))/(1000*60)) + "m " + Math.floor((d%(1000*60))/1000) + "s";
+            if (d < 0) { document.getElementById("timer").style.display="none"; document.getElementById("btn").style.display="block"; }
+        }, 1000);
+
+        let taps = 0;
+        document.getElementById('tapMe').onclick = () => { taps++; if(taps==3){ document.getElementById("btn").style.display="block"; alert("Secret Unlocked!"); } };
+
+        function unlock() { document.getElementById("music").play(); document.getElementById("lock-screen").style.display="none"; }
+
+        function createHeart() {
+            const h = document.createElement('div'); h.className='heart'; h.innerHTML='❤️'; h.style.left=Math.random()*100+'vw';
+            h.style.animationDuration=(Math.random()*3+3)+'s'; document.getElementById('heart-container').appendChild(h);
+            setTimeout(()=>h.remove(), 6000);
+        }
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
